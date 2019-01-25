@@ -73,9 +73,9 @@ struct Opt {
     id_vars: String,
     //#[structopt(long="value-vars")]
     //value_vars: Option<String>,
-    #[structopt(long="var_name", default_value="variable")]
+    #[structopt(long="var-name", default_value="variable")]
     var_name: String,
-    #[structopt(long="value-name", default_value="value")]
+    #[structopt(long="val-name", default_value="value")]
     value_name: String,
 
     #[structopt(long="no-header")]
