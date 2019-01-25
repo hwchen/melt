@@ -35,7 +35,13 @@ fn main() -> Result<(), Error> {
 
     wtr.write_record(new_header)?;
 
-    for result in rdr.records() {
+    for result in rdr.byte_records() {
+        // creating vecs seems like it should be slow;
+        // but these are vecs of references to the bytes in the
+        // byterecord, so that may be why it's fast
+        //
+        // Otherwise, manipulating the ByteRecord itself may not
+        // actually be that fast.
         let record = result?;
 
         let record: Vec<_> = record.iter().collect();
@@ -45,7 +51,7 @@ fn main() -> Result<(), Error> {
 
         for (value, var_member) in value_vars.iter().zip(var_members) {
             // TODO: don't write if value is blank
-            out_record.push(var_member);
+            out_record.push(var_member.as_bytes());
             out_record.push(value);
 
             wtr.write_record(&out_record)?;
