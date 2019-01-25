@@ -20,8 +20,6 @@ fn main() -> Result<(), Error> {
 
     let mut rdr = csv::Reader::from_reader(io::stdin());
     let mut wtr = csv::Writer::from_writer(io::stdout());
-    dbg!(id_vars_min);
-    dbg!(id_vars_max);
 
     // get the var members (col names) from header
     let headers = rdr.headers()?.clone();
@@ -51,6 +49,8 @@ fn main() -> Result<(), Error> {
 
         for (value, var_member) in value_vars.iter().zip(var_members) {
             // TODO: don't write if value is blank
+            if value.is_empty()  { continue }
+
             out_record.push(var_member.as_bytes());
             out_record.push(value);
 
